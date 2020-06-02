@@ -120,7 +120,7 @@ class ApplicationPublishTests(FunctionalTestCase):
         # These are all aliases.
         for name in ('Redirect', 'ZopeRedirect'):
             response = self.publish(
-                '/{}?destination=http://google.nl'.format(name))
+                f'/{name}?destination=http://google.nl')
             # This should *not* return a 302 Redirect.
             self.assertEqual(response.status, 404)
 

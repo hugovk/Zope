@@ -38,7 +38,7 @@ from .Expressions import PathIterator
 from .Expressions import SecureModuleImporter
 
 
-class _PseudoContext(object):
+class _PseudoContext:
     """auxiliary context object.
 
     Used to bridge between ``chameleon`` and ``zope.tales`` iterators.
@@ -88,7 +88,7 @@ class RepeatItem(PathIterator):
         return self
 
     def __next__(self):
-        if super(RepeatItem, self).__next__():
+        if super().__next__():
             return self.item
         else:
             raise StopIteration
@@ -218,7 +218,7 @@ def _c_context_2_z_context(c_context):
 _c_context_2_z_context_node = Static(Symbol(_c_context_2_z_context))
 
 
-class MappedExpr(object):
+class MappedExpr:
     """map expression: ``zope.tales`` --> ``chameleon.tales``."""
     def __init__(self, type, expression, zt_engine):
         self.type = type
@@ -269,7 +269,7 @@ class MappedExpr(object):
             c2z_context=_c_context_2_z_context_node)
 
 
-class MappedExprType(object):
+class MappedExprType:
     """map expression type: ``zope.tales`` --> ``chameleon.tales``."""
     def __init__(self, engine, type):
         self.engine = engine
@@ -288,7 +288,7 @@ class ZtPageTemplate(ChameleonPageTemplate):
     """
     # override to get the proper ``zope.tales`` default marker
     def _compile(self, body, builtins):
-        code = super(ZtPageTemplate, self)._compile(body, builtins)
+        code = super()._compile(body, builtins)
         # redefine ``__default`` as ``zope.tales.tales._default``
         #  Potentially this could be simpler
         frags = code.split("\n", 5)
@@ -347,8 +347,8 @@ class Program:
 
         if isinstance(engine, ZopeBaseEngine):
             # use ``zope.tales`` expressions
-            expr_types = dict((ty, MappedExprType(engine, ty))
-                              for ty in engine.types)
+            expr_types = {ty: MappedExprType(engine, ty)
+                              for ty in engine.types}
         else:
             # use ``chameleon.tales`` expressions
             expr_types = engine.types

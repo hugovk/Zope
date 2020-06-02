@@ -612,17 +612,17 @@ class ObjectManager(
             if RESPONSE is not None:
                 RESPONSE.setHeader('Content-type', 'application/data')
                 RESPONSE.setHeader('Content-Disposition',
-                                   'inline;filename=%s.%s' % (id, suffix))
+                                   f'inline;filename={id}.{suffix}')
             return result
 
-        f = os.path.join(CONFIG.clienthome, '%s.%s' % (id, suffix))
+        f = os.path.join(CONFIG.clienthome, f'{id}.{suffix}')
         with open(f, 'w+b') as fd:
             ob._p_jar.exportFile(ob._p_oid, fd)
 
         if REQUEST is not None:
             return self.manage_main(
                 self, REQUEST,
-                manage_tabs_message='"%s" successfully exported to "%s"' % (
+                manage_tabs_message='"{}" successfully exported to "{}"'.format(
                     id,
                     f
                 ),

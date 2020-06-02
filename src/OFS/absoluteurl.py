@@ -77,7 +77,7 @@ class AbsoluteURL(BrowserView):
 
         if name:
             base += ({'name': name,
-                      'url': ("%s/%s" % (base[-1]['url'],
+                      'url': ("{}/{}".format(base[-1]['url'],
                                          quote(name.encode('utf-8'), _safe)))
                       }, )
 
@@ -109,7 +109,7 @@ class OFSTraversableAbsoluteURL(BrowserView):
         view = getMultiAdapter((container, request), IAbsoluteURL)
         base = tuple(view.breadcrumbs())
         base += (
-            {'name': name, 'url': ("%s/%s" % (base[-1]['url'], name))},)
+            {'name': name, 'url': ("{}/{}".format(base[-1]['url'], name))},)
 
         return base
 

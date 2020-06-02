@@ -181,7 +181,7 @@ class ApplicationManager(Persistent, Tabs, Traversable, Implicit):
         h = h and ('%d hour%s' % (h, (h != 1 and 's' or ''))) or ''
         m = m and ('%d min' % m) or ''
         s = '%d sec' % s
-        return '%s %s %s %s' % (d, h, m, s)
+        return f'{d} {h} {m} {s}'
 
     def sys_version(self):
         return sys.version
@@ -254,7 +254,7 @@ class AltDatabaseManager(Traversable, UndoSupport):
 
         if REQUEST is not None:
             msg = 'ZODB in-memory caches minimized.'
-            url = '%s/manage_main?manage_tabs_message=%s' % (REQUEST['URL1'],
+            url = '{}/manage_main?manage_tabs_message={}'.format(REQUEST['URL1'],
                                                              msg)
             REQUEST.RESPONSE.redirect(url)
 
@@ -276,7 +276,7 @@ class AltDatabaseManager(Traversable, UndoSupport):
             msg = 'Invalid days value %s' % str(days)
 
         if REQUEST is not None:
-            url = '%s/manage_main?manage_tabs_message=%s' % (REQUEST['URL1'],
+            url = '{}/manage_main?manage_tabs_message={}'.format(REQUEST['URL1'],
                                                              msg)
             REQUEST['RESPONSE'].redirect(url)
 
